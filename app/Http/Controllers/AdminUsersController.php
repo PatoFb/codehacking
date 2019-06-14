@@ -130,8 +130,12 @@ class AdminUsersController extends Controller
     {
         //
         $user = User::findOrFail($id);
-        unlink(public_path() . $user->photo->file);
-        $user->delete();
+        if($user->photo_id == ''){
+            $user->delete();
+        } else {
+            unlink(public_path() . $user->photo->file);
+            $user->delete();
+        }
         Session::flash('deleted_user', 'The user has been successfully deleted');
         return redirect('/admin/users');
     }

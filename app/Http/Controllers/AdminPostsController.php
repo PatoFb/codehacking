@@ -2,9 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Http\Requests\PostsEditRequest;
+use App\Http\Requests\PostsRequest;
+use App\Photo;
+use App\Post;
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AdminPostsController extends Controller
 {
@@ -16,6 +25,8 @@ class AdminPostsController extends Controller
     public function index()
     {
         //
+        $posts = Post::all();
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -26,6 +37,10 @@ class AdminPostsController extends Controller
     public function create()
     {
         //
+        $users = User::lists('name', 'id')->all();
+        $categories = Category::lists('name', 'id')->all();
+        return view('admin.posts.create', compact('categories', 'users'));
+
     }
 
     /**
@@ -34,9 +49,26 @@ class AdminPostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostsRequest $request)
     {
         //
+        $input = $request->all();
+        $user = Auth::user();
+        $user->posts;
+        //return redirect('/admin/users');
+        //return view('admin.users.store');
+        //return $request->all();
+        if($file = $request->file('photo_id')){
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['file'=>$name]);
+            $input['photo_id'] = $photo->id;
+
+        }
+        $user->posts()->create($input);
+        Session::flash('added_post', 'The post has been successfully created');
+        return redirect('/admin/posts');
+
     }
 
     /**
@@ -59,6 +91,10 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
         //
+        $users = User::lists('name', 'id')->all();
+        $categories = Category::lists('name', 'id')->all();
+        $post = Post::findOrFail($id);
+        return view('admin.posts.edit', compact('post', 'categories', 'users'));
     }
 
     /**
@@ -68,10 +104,22 @@ class AdminPostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostsEditRequest $request, $id)
     {
         //
+        $post = Post::findOrFail($id);
+        $input = $request->all();
+        if($file = $request->file('photo_id')){
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['file'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+        $post->update($input);
+        Session::flash('updated_post', 'The post has been successfully updated');
+        return redirect('admin/posts');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -82,5 +130,14 @@ class AdminPostsController extends Controller
     public function destroy($id)
     {
         //
+        $post = Post::findOrFail($id);
+        if ($post->photo_id == 0) {
+            $post->delete();
+        } else {
+            unlink(public_path() . $post->photo->file);
+            $post->delete();
+        }
+        Session::flash('deleted_post', 'The post has been successfully deleted');
+        return redirect('/admin/posts');
     }
 }

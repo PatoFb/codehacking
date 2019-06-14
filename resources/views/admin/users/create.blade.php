@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>Create new user</h1>
+    <h1>Add new user</h1>
 
     {!! Form::open(['method'=>'POST', 'action'=>'AdminUsersController@store', 'files'=>true]) !!}
     <div class="form-row">
