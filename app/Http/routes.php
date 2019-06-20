@@ -1,5 +1,9 @@
 <?php
 
+if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+    error_reporting(E_ALL ^ E_WARNING);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -21,6 +25,8 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
+Route::get('/post/{id}', ['as'=>'home.post','uses'=>'AdminPostsController@post']);
+
 Route::resource('/admin/users', 'AdminUsersController');
 
 Route::get('/admin', function(){
@@ -32,5 +38,14 @@ Route::group(['middleware'=>'admin'], function(){
     Route::resource('/admin/users', 'AdminUsersController');
     Route::resource('/admin/posts', 'AdminPostsController');
     Route::resource('/admin/categories', 'AdminCategoriesController');
+    Route::resource('/admin/media', 'MediaController');
+    Route::resource('admin/comments', 'PostCommentsController');
+    Route::resource('admin/comment/replies', 'CommentRepliesController');
 });
+
+Route::group(['middleware'=>'auth'], function(){
+
+    Route::post('comment/reply', 'CommentRepliesController@createReply');
+});
+
 

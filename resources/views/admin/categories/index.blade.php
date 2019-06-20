@@ -73,4 +73,10 @@
             </div>
 
     </div>
+
+    <div class="row">
+        <div class="form-group col-sm-offset-5">
+            {{$categories->render()}}
+        </div>
+    </div>
     @stop

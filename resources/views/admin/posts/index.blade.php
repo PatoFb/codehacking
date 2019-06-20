@@ -23,18 +23,6 @@
 
     <h1>Posts</h1>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <title>Bootstrap Example</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-
     <div class="container">
       <table class="table table-striped">
         <thead>
@@ -45,6 +33,8 @@
               <th>Photo</th>
               <th>Title</th>
               <th>Content</th>
+              <th></th>
+              <th></th>
               <th>Created</th>
               <th>Last Updated</th>
           </tr>
@@ -65,6 +55,8 @@
               <td><img height="50" src="{{$post->photo ? $post->photo->file : 'http://placehold.it/600x400'}}" alt=""></td>
               <td><a href="{{route('admin.posts.edit', $post->id)}}">{{$post->title}}</a></td>
               <td>{{str_limit($post->body, 30)}}</td>
+              <td><a href="{{route('home.post', $post->slug)}}">View post</a></td>
+              <td><a href="{{route('admin.comments.show', $post->id)}}">View comments</a></td>
               @if ($post->created_at == null)
                   <td>{{$post->created_at}}</td>
               @else
@@ -82,7 +74,10 @@
       </table>
     </div>
 
-    </body>
-    </html>
+    <div class="row">
+        <div class="form-group col-sm-offset-5">
+            {{$posts->render()}}
+        </div>
+    </div>
 
     @stop

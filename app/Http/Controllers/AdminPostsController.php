@@ -25,7 +25,7 @@ class AdminPostsController extends Controller
     public function index()
     {
         //
-        $posts = Post::all();
+        $posts = Post::paginate(2);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -37,8 +37,8 @@ class AdminPostsController extends Controller
     public function create()
     {
         //
-        $users = User::lists('name', 'id')->all();
-        $categories = Category::lists('name', 'id')->all();
+        $users = User::pluck('name', 'id')->all();
+        $categories = Category::pluck('name', 'id')->all();
         return view('admin.posts.create', compact('categories', 'users'));
 
     }
@@ -91,8 +91,8 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
         //
-        $users = User::lists('name', 'id')->all();
-        $categories = Category::lists('name', 'id')->all();
+        $users = User::pluck('name', 'id')->all();
+        $categories = Category::pluck('name', 'id')->all();
         $post = Post::findOrFail($id);
         return view('admin.posts.edit', compact('post', 'categories', 'users'));
     }
@@ -117,7 +117,7 @@ class AdminPostsController extends Controller
         }
         $post->update($input);
         Session::flash('updated_post', 'The post has been successfully updated');
-        return redirect('admin/posts');
+        return redirect('admin.posts.index');
     }
 
 
@@ -139,5 +139,11 @@ class AdminPostsController extends Controller
         }
         Session::flash('deleted_post', 'The post has been successfully deleted');
         return redirect('/admin/posts');
+    }
+
+    public function post($slug){
+        $post = Post::findBySlug($slug);
+        $comments = $post->comments()->whereIsActive(1)->get();
+        return view('post', compact('post', 'comments'));
     }
 }
