@@ -1,5 +1,97 @@
 # Change Log
 
+## 4.8.0 - 28-Feb-2019
+
+- Laravel 5.8 support (#460, big thanks @tabuna)
+
+
+## 4.7.0 - 24-Feb-2019
+
+- Fix slug getting set to `null` if model is updated with no source column loaded (#450, thanks @mylgeorge)
+
+
+## 4.6.0 - 04-Sep-2018
+
+- Laravel 5.7 support
+
+
+## 4.5.1 - 21-May-2018
+
+- Bump versions of package dependencies
+
+
+## 4.5.0 - 10-Feb-2018
+
+- Laravel 5.6 support
+
+
+## 4.4.1 - 04-Jan-2018
+
+- Better exception message when calling `SlugService::createSlug` with an invalid attribute (#402, thanks @lptn)
+- Prettier unit test output
+
+
+## 4.4.0 - 12-Dec-2017
+
+- Make sure truncated slugs (due to maxLength) don't end in a separator (#398)
+- Add `maxLengthKeepWords` configuration option (#398)
+
+
+## 4.3.0 - 31-Aug-2017
+
+- Laravel 5.5 support, including auto-registration
+- Bumped `cocur/slugify` to `^3.0`
+
+
+## 4.2.5 - 31-Aug-2017
+
+- Fixing composer requirements to support Laravel 5.4 only
+
+
+## 4.2.4 - 04-Jul-2017
+
+- Documentation change (#374, thanks @fico7489)
+
+
+## 4.2.3 - 18-Apr-2017
+
+- Switch to allow extending the class (#356, thanks @haddowg)
+- Fix when adding suffixes to reserved slugs (#356, thanks @haddowg)
+
+
+## 4.2.2 - 23-Mar-2017
+
+- Better handling of numeric and boolean slug sources (#351, thanks @arturock)
+
+
+## 4.2.1 - 01-Feb-2017
+
+- Support Laravel 5.4 (#339, thanks @maddhatter)
+
+
+## 4.1.2 - 09-Nov-2016
+
+- Fix in `getExistingSlugs` when using global scopes (#327)
+- Update `Cocur\Slugify` to `^2.3`.
+
+
+## 4.1.1 - 12-Oct-2016
+
+- Fix for slugs updating when they don't need to, when using `onUpdate` with `unique` (#317) 
+
+
+## 4.1.0 - 14-Sep-2016
+
+- The goal of the 4.1.x releases will be to focus on support in Laravel 5.3, only providing support for 5.1/5.2
+  where it is easy and doesn't affect performance significantly.
+- Drop support for PHP <5.6 and HHVM (no longer supported by Laravel 5.3); fixes test build process
+
+
+## 4.0.4 - 13-Sep-2016
+
+- Fix `SluggableScopeHelpers` to work when using the short configuration syntax (#314).
+
+
 ## 4.0.3 - 15-Jul-2016
 
 - Added `$config` argument to `SlugService::createSlug` method for optionally overriding 
@@ -42,7 +134,7 @@
   - Removed artisan command to add slug column to tables.  You will need to do this
     (pretty simple) task yourself now. 
   - Several bug fixes.
-- See [UPGRADING.md] for details.
+- See [UPGRADING.md](UPGRADING.md) for details.
 
 
 ## 3.1.4 - 03-Jan-2016

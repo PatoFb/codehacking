@@ -6,7 +6,7 @@
     <h1>Edit post</h1>
 
     <div class="form-group col-sm-6">
-        <img src="{{$post->photo ? $post->photo->file : 'http://placehold.it/400x400'}}" alt="" class="img-responsive img-rounded">
+        <img src="{{$post->photo ? $post->photo->file : $post->placeholder()}}" alt="" class="img-responsive img-rounded">
     </div>
 
     <div class="form-group col-sm-6">

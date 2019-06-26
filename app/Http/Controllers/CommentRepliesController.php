@@ -96,13 +96,23 @@ class CommentRepliesController extends Controller
 
     public function createReply(Request $request){
         $user = Auth::user();
-        $data = [
-            'comment_id'=>$request->comment_id,
-            'author'=>$user->name,
-            'email'=>$user->email,
-            'photo'=>$user->photo->file,
-            'body'=>$request->body
-        ];
+        if (is_null($user->photo)){
+            $data = [
+                'comment_id'=>$request->comment_id,
+                'author'=>$user->name,
+                'email'=>$user->email,
+                //'photo'=>$user->photo->file,
+                'body'=>$request->body
+            ];
+        } else {
+            $data = [
+                'comment_id' => $request->comment_id,
+                'author' => $user->name,
+                'email' => $user->email,
+                'photo' => $user->photo->file,
+                'body' => $request->body
+            ];
+        }
         CommentReply::create($data);
         $request->session()->flash('reply_message', 'Your reply has been submitted');
         return redirect()->back();

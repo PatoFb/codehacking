@@ -14,21 +14,18 @@ if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Route::auth();
 
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::get('/post/{id}', ['as'=>'home.post','uses'=>'AdminPostsController@post']);
+Route::get('/post/{id}', ['as'=>'home.post','uses'=>'HomeController@post']);
 
 Route::group(['middleware'=>'admin'], function(){
 
-    Route::get('/admin', function(){
-        return view('admin.index');
-    });
+    Route::get('/admin', 'AdminController@index');
+
     Route::resource('/admin/users', 'AdminUsersController', ['names'=>[
         'index'=>'admin.users.index',
         'create'=>'admin.users.create',
@@ -50,7 +47,7 @@ Route::group(['middleware'=>'admin'], function(){
         'destroy'=>'admin.categories.destroy',
         'edit'=>'admin.categories.edit'
     ]]);
-    Route::resource('/admin/media', 'MediaController', ['names'=>[
+    Route::resource('admin/media', 'MediaController', ['names'=>[
         'index'=>'admin.media.index',
         'create'=>'admin.media.create',
         'store'=>'admin.media.store',
@@ -73,6 +70,8 @@ Route::group(['middleware'=>'admin'], function(){
         'edit'=>'admin.comment.replies.edit',
         'show'=>'admin.comment.replies.show'
     ]]);
+
+    Route::delete('admin/delete/media', 'MediaController@deleteMedia');
 
 
 });

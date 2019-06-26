@@ -1,12 +1,11 @@
 # Route Model Binding and Eloquent-Sluggable
 
-Route Model Binding has been removed from the 4.x version of the core package.  However, implementing 
-it yourself is very easy!
+Route Model Binding is easy to implement with only minor configuration to your models.
 
 
 ## Implicit Binding
 
-Implicit binding is as easy as adding a `getRouteKeyName()` method to your model that returns the name
+Implicit binding requires adding a `getRouteKeyName()` method to your model that returns the name
 of the slug field:
 
 ```php
@@ -51,7 +50,7 @@ In this example, since the Eloquent type-hinted `$post` variable defined on the 
 matches the {post} segment in the route's URI, Laravel will automatically inject the 
 model instance that has a slug matching the corresponding value from the request URI.
 
-Further, if you are using the [`SluggableScopeHelpers`](SCOPE-HELPERS.md) trait, you can bind
+Further, if you are using the [SluggableScopeHelpers](SCOPE-HELPERS.md) trait, you can bind
 the default slug to the route parameter with:
  
 ```php
@@ -64,12 +63,11 @@ public function getRouteKeyName()
 
 ## Explicit Binding
 
-You can also use the `RootServiceProvider::boot` method as described in the 
-[Laravel Documentation](https://laravel.com/docs/5.2/routing#route-model-binding) to 
+You can also use the `RouteServiceProvider::boot` method as described in the 
+[Laravel Documentation](https://laravel.com/docs/routing#route-model-binding) to 
 handle explicit route model binding.
 
- 
- 
+
 - - -
 
 Copyright (c) 2013 Colin Viebrock

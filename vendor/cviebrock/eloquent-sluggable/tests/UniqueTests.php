@@ -14,8 +14,6 @@ class UniqueTests extends TestCase
 
     /**
      * Test uniqueness of generated slugs.
-     *
-     * @test
      */
     public function testUnique()
     {
@@ -33,8 +31,6 @@ class UniqueTests extends TestCase
 
     /**
      * Test uniqueness after deletion.
-     *
-     * @test
      */
     public function testUniqueAfterDelete()
     {
@@ -57,9 +53,7 @@ class UniqueTests extends TestCase
     }
 
     /**
-     * Test
-     *
-     * @test
+     * Test custom unique query scopes.
      */
     public function testCustomUniqueQueryScope()
     {
@@ -93,5 +87,17 @@ class UniqueTests extends TestCase
         $post->save();
 
         $this->assertEquals('my-first-post-1', $post->slug);
+    }
+
+    public function testIssue431() {
+        $post1 = Post::create([
+            'title' => 'A post title'
+        ]);
+        $this->assertEquals('a-post-title', $post1->slug);
+
+        $post2 = new Post;
+        $post2->title = 'A post title';
+        $post2->save();
+        $this->assertEquals('a-post-title-1', $post2->slug);
     }
 }

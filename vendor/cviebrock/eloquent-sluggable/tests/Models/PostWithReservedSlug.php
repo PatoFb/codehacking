@@ -4,6 +4,8 @@
  * Class PostWithReservedSlug
  *
  * A test model that uses custom reserved slug names.
+ *
+ * @package Cviebrock\EloquentSluggable\Tests\Models
  */
 class PostWithReservedSlug extends Post
 {
@@ -18,7 +20,7 @@ class PostWithReservedSlug extends Post
         return [
             'slug' => [
                 'source' => 'title',
-                'reserved' => ['add']
+                'reserved' => ['add','add-1']
             ]
         ];
     }

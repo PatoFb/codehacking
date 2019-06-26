@@ -43,4 +43,8 @@ public function sluggable(){
     public function comments(){
         return $this->hasMany('App\Comment');
     }
+
+    public function placeholder() {
+        return "http://placehold.it/700x500";
+    }
 }

@@ -1,5 +1,6 @@
 <?php namespace Cviebrock\EloquentSluggable\Tests;
 
+use Cviebrock\EloquentSluggable\Tests\Models\PostShortConfigWithScopeHelpers;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugsAndCustomSlugKey;
 use Cviebrock\EloquentSluggable\Tests\Models\PostWithMultipleSlugsAndHelperTrait;
 
@@ -13,8 +14,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test that primary slug is set to $model->slugKeyName when set.
-     *
-     * @test
      */
     public function testSlugKeyNameProperty()
     {
@@ -31,8 +30,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test primary slug is set to first defined slug if $model->slugKeyName is not set.
-     *
-     * @test
      */
     public function testFirstSlugAsFallback()
     {
@@ -46,8 +43,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test primary slug query scope.
-     *
-     * @test
      */
     public function testQueryScope()
     {
@@ -70,8 +65,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test finding a model by its primary slug.
-     *
-     * @test
      */
     public function testFindBySlug()
     {
@@ -94,8 +87,6 @@ class ScopeHelperTests extends TestCase
 
     /**
      * Test finding a model by its primary slug fails if the slug does not exist.
-     *
-     * @test
      */
     public function testFindBySlugReturnsNullForNoRecord()
     {
@@ -105,7 +96,6 @@ class ScopeHelperTests extends TestCase
     /**
      * Test finding a model by its primary slug throws an exception if the slug does not exist.
      *
-     * @test
      * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function testFindBySlugOrFail()
@@ -126,5 +116,14 @@ class ScopeHelperTests extends TestCase
             PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('a-post-title-b')->getKey());
 
         PostWithMultipleSlugsAndHelperTrait::findBySlugOrFail('not a real record');
+    }
+
+    /**
+     * Test that getSlugKeyName() works with the short configuration syntax.
+     */
+    public function testGetSlugKeyNameWithShortConfig()
+    {
+        $post = new PostShortConfigWithScopeHelpers();
+        $this->assertEquals('slug_field', $post->getSlugKeyName());
     }
 }

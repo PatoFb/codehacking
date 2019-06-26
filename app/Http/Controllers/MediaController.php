@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
 class MediaController extends Controller
 {
     public function index() {
-        $photos = Photo::paginate(2);
+        $photos = Photo::paginate(5);
         return view('admin.media.index', compact('photos'));
     }
 
@@ -31,8 +31,20 @@ class MediaController extends Controller
         $photo = Photo::findOrFail($id);
         unlink(public_path() . $photo->file);
         $photo->delete();
-        Session::flash('deleted_photo', 'The photo has been successfully deleted');
-        return redirect('admin/media');
+    }
+
+    public function deleteMedia(Request $request){
+        if(isset($request->delete_all) && !empty($request->checkBoxArray)){
+            $photos = Photo::findOrFail($request->checkBoxArray);
+            foreach($photos as $photo) {
+                $photo->delete();
+                Session::flash('deleted_photo', 'The photo(s) has been successfully deleted');
+            }
+            return redirect()->back();
+
+        } else {
+            return redirect()->back();
+        }
     }
 
 

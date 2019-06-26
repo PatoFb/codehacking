@@ -41,13 +41,23 @@ class PostCommentsController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $data = [
-            'post_id'=>$request->post_id,
-            'author'=>$user->name,
-            'email'=>$user->email,
-            'photo'=>$user->photo->file,
-            'body'=>$request->body
-        ];
+        if (is_null($user->photo)){
+            $data = [
+                'post_id'=>$request->post_id,
+                'author'=>$user->name,
+                'email'=>$user->email,
+                //'photo'=>$user->photo->file,
+                'body'=>$request->body
+            ];
+        } else {
+            $data = [
+                'post_id' => $request->post_id,
+                'author' => $user->name,
+                'email' => $user->email,
+                'photo' => $user->photo->file,
+                'body' => $request->body
+            ];
+        }
         Comment::create($data);
         $request->session()->flash('comment_message', 'Your message has been submitted');
         return redirect()->back();

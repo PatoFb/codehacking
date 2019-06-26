@@ -28,13 +28,12 @@
         <thead>
           <tr>
             <th>ID</th>
-              <th>Owner</th>
-              <th>Category</th>
               <th>Photo</th>
               <th>Title</th>
-              <th>Content</th>
-              <th></th>
-              <th></th>
+              <th>Owner</th>
+              <th>Category</th>
+              <th>Post link</th>
+              <th>Comments link</th>
               <th>Created</th>
               <th>Last Updated</th>
           </tr>
@@ -46,15 +45,14 @@
 
           <tr>
             <td>{{$post->id}}</td>
+              <td><img height="50" src="{{$post->photo ? $post->photo->file : $post->placeholder()}}" alt=""></td>
+              <td><a href="{{route('admin.posts.edit', $post->id)}}">{{$post->title}}</a></td>
               <td>{{$post->user->name}}</td>
               @if($post->category_id == 0)
                   <td>Unknown</td>
               @else
                   <td>{{$post->category->name}}</td>
               @endif
-              <td><img height="50" src="{{$post->photo ? $post->photo->file : 'http://placehold.it/600x400'}}" alt=""></td>
-              <td><a href="{{route('admin.posts.edit', $post->id)}}">{{$post->title}}</a></td>
-              <td>{{str_limit($post->body, 30)}}</td>
               <td><a href="{{route('home.post', $post->slug)}}">View post</a></td>
               <td><a href="{{route('admin.comments.show', $post->id)}}">View comments</a></td>
               @if ($post->created_at == null)
