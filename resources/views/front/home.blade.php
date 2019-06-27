@@ -21,7 +21,7 @@
             <img class="img-responsive" src="{{$post->photo ? $post->photo->file : 'http://placehold.it/900x300'}}" alt="">
             <hr>
             <p>{{str_limit($post->body, 300)}}</p>
-            <a class="btn btn-primary" href="/post/{{$post->slug}}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="btn btn-primary" href="/codehacking/post/{{$post->slug}}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
             <hr>
 

@@ -68,11 +68,6 @@
         </div>
     </div>
 
-    <script>
-        $(document).ready(function(){
-            console.log('hello');
-        });
-    </script>
     @stop
 
 @section('scripts')

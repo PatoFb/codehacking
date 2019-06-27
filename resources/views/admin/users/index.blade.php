@@ -46,7 +46,7 @@
                     <td><img height="50" src="{{$user->photo ? $user->photo->file : 'http://placehold.it/600x400'}}" alt=""></td>
                     <td><a href="{{route('admin.users.edit', $user->id)}}">{{$user->name}}</a></td>
                     <td>{{$user->email}}</td>
-                    <td>{{$user->role->name}}</td>
+                    <td>{{$user->role ? $user->role->name : 'Unassigned'}}</td>
                     @if ($user->is_active == 1)
                         <td>Active</td>
                     @else
